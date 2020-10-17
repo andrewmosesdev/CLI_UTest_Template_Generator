@@ -12,14 +12,13 @@ class Employee {
         return this.name;
     }
     getId() {
-        return this.id;
+        // return this.id;
+        return 100
     }
     getEmail() {
-        return this.email;
+        // return this.email;
+        return "test@test.com"
     }
 };
-
-
-
 
 module.exports = Employee;

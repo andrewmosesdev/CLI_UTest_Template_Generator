@@ -17,44 +17,44 @@ inquirer
         {
             type: "list",
             name: "role",
-            message: "What is the team members position within the organization?",
+            message: "Enter Role:",
             choices: ["Employee", "Engineer", "Intern", "Manager"]
         },
         {
             type: "input",
             name: "name",
-            message: "What is the team members name?",
-            // when: "",
+            message: "Enter name:",
+
         },
         {
-            type: "input",
+            type: "number",
             name: "id",
-            message: "What is the team members ID number?",   
+            message: "Enter ID number:",
+   
         },
         {
             type: "input",
             name: "email",
-            message: "What is the team members email address?"
+            message: "Enter email address:",
+
         },
         {
             type: "input",
             name: "github",
-            message: "What is the team members GitHub URL?"
+            message: "Enter GitHub URL?",
+            when: answers => answers.choices === "Engineer"
         },
-        // {
-        //     type: "input",
-        //     name: "github-username",
-        //     message: "What is the team members GitHub username?"
-        // },
         {
             type: "input",
             name: "school",
-            message: "What school is the team member currently attending?"
+            message: "Enter current school:",
+            when: answers => answers.choices === "Intern"
         },
         {
-            type: "input",
+            type: "number",
             name: "officeNumber",
-            message: "What office number is the team member located at?"
+            message: "Enter office number:",
+            when: answers => answers.choices === "Manager"
         }
     ])
     .then((answers) => {
@@ -64,7 +64,7 @@ inquirer
         console.log(error)
     });
 
-
+const html = []
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
