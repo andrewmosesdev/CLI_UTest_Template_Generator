@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const newEmployeeInstance = [];
+
 // Write code to use inquirer to gather information about the development team members,
 inquirer
     .prompt([
@@ -42,33 +44,51 @@ inquirer
             type: "input",
             name: "github",
             message: "Enter GitHub URL?",
-            when: answers => answers.choices === "Engineer"
+            // use when method, if function returns true, prompt Engineer specific question 
+            when: answers => answers.role === "Engineer"
         },
         {
             type: "input",
             name: "school",
             message: "Enter current school:",
-            when: answers => answers.choices === "Intern"
+            // use when method, if function returns true, prompt Inter specific question
+            when: answers => answers.role === "Intern"
         },
         {
             type: "number",
             name: "officeNumber",
             message: "Enter office number:",
-            when: answers => answers.choices === "Manager"
+            // use when method, if function returns true, prompt Manager specific question
+            when: answers => answers.role === "Manager"
         }
     ])
-    .then((answers) => {
-        render(answers);
+    .then(answers => {
+        // render(answers);
+        // create new instance of engineer giving values of engineer responses, then push to employees array
+        const newEngineerInstance = new Engineer(answers.name, answers.email, answers.id, answers.role, answers.github);
+        // console.log(newEngineerInstance);
+        newEmployeeInstance.push(newEngineerInstance)
+
+        // create new instance of manager giving values of engineer respones, then push to employees array
+        const newManagerInstance = new Manager(answers.name, answers.email, answers.id, answers.role, answers.github);
+        // console.log(newManagerInstance);
+        newEmployeeInstance.push(newManagerInstance);
+
+        // create new instance of engineer giving values of engineer responses, then push to employees array
+        const newInternInstance = new Intern(answers.name, answers.email, answers.id, answers.role, answers.github);
+        // console.log(newInternInstance);
+        newEmployeeInstance.push(newInternInstance);
     })
     .catch((error) => {
         console.log(error)
     });
 
-const html = []
+    // need to create a different array to push the information collected to, then pass that to render function
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
-render(html);
+render(newEmployeeInstance);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
