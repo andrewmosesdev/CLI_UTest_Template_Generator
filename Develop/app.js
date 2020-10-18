@@ -4,15 +4,21 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const util = require("util");
+// promisify since using async/await
+const newAppendFile = util.promisify(fs.appendFile)
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+// create empty array "employees" to push employee instances to
 const employees = [];
 
+// create prompts for questions to be asked
 const questionPrompts = [
+// choose an employee type, name, email, and id
 {
     type: "list",
     name: "role",
@@ -23,23 +29,18 @@ const questionPrompts = [
     type: "input",
     name: "name",
     message: "Enter name:",
-    // when: answers => answers.role === "Engineer" || answers.role === "Intern" || answers.role === "Manager"
-
 },
 {
     type: "input",
     name: "email",
     message: "Enter email address:",
-    // when: answers => answers.role === "Engineer" || answers.role === "Intern" || answers.role === "Manager"
-
 },
 {
     type: "number",
     name: "id",
     message: "Enter ID number:",
-    // when: answers => answers.role === "Engineer" || answers.role === "Intern" || answers.role === "Manager"
-
 },
+// engineer specific question utilizing when method
 {
     type: "input",
     name: "github",
@@ -48,6 +49,7 @@ const questionPrompts = [
         return answers.role === "Engineer"
     }    
 },
+// intern specific question utilizing when method
 {
     type: "input",
     name: "school",
@@ -56,6 +58,7 @@ const questionPrompts = [
         return answers.role === "Intern"
     }
 },
+// manager specific question utilizing when method
 {
     type: "number",
     name: "officeNumber",
@@ -64,6 +67,7 @@ const questionPrompts = [
         return answers.role === "Manager"
     }
 },
+// confirm prompt to create another employee instance or end prompt
 {
     type: "confirm",
     name: "repeatPrompt",
@@ -71,11 +75,13 @@ const questionPrompts = [
     default: true,
 }];
 
+// run function to begin prompt
 buildTeam();
 
+// async function to begin prompt and create team.html
 async function buildTeam() {
-// Write code to use inquirer to gather information about the development team members,
-await inquirer
+    // await inquirer prompt to ask questions
+    await inquirer
     .prompt(questionPrompts)
     .then(answers => {
 
@@ -101,8 +107,10 @@ await inquirer
         if(answers.repeatPrompt) {
             buildTeam()
         } else {
+            // otherwise, console.log and append new employee instances to team.html
             console.log("Your team has been created.");
             console.log(employees);
+            newAppendFile("team.html", render(employees))
         }
     })
     .catch((error) => {
@@ -110,29 +118,3 @@ await inquirer
     });
     
 };
-
-    // need to create a different array to push the information collected to, then pass that to render function
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// fs.appendFile(render(employees));
-
-render(employees)
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
