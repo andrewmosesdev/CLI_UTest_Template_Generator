@@ -12,58 +12,67 @@ const render = require("./lib/htmlRenderer");
 
 const newEmployeeInstance = [];
 
+const questionPrompts = [
+{
+    type: "list",
+    name: "role",
+    message: "Choose role to add to team:",
+    choices: ["Engineer", "Intern", "Manager"],
+    // when: answers => answers.startEnd === "Yes"
+},
+{
+    type: "input",
+    name: "name",
+    message: "Enter name:",
+    when: answers => answers.role === "Engineer" || answers.role === "Intern" || answers.role === "Manager"
+
+},
+{
+    type: "number",
+    name: "id",
+    message: "Enter ID number:",
+    when: answers => answers.role === "Engineer" || answers.role === "Intern" || answers.role === "Manager"
+
+},
+{
+    type: "input",
+    name: "email",
+    message: "Enter email address:",
+    when: answers => answers.role === "Engineer" || answers.role === "Intern" || answers.role === "Manager"
+
+},
+{
+    type: "input",
+    name: "github",
+    message: "Enter GitHub URL:",
+    when: answers => answers.role === "Engineer"
+},
+{
+    type: "input",
+    name: "school",
+    message: "Enter current school:",
+    when: answers => answers.role === "Intern"
+},
+{
+    type: "number",
+    name: "officeNumber",
+    message: "Enter office number:",
+    when: answers => answers.role === "Manager"
+},
+{
+    type: "confirm",
+    name: "repeatPrompt",
+    message: "Would you like to add another employee?",
+    default: true,
+}];
+
+buildTeam();
+
+async function buildTeam() {
 // Write code to use inquirer to gather information about the development team members,
-inquirer
-    .prompt([
-        // and to create objects for each team member (using the correct classes as blueprints!)
-        {
-            type: "list",
-            name: "role",
-            message: "Enter Role:",
-            choices: ["Employee", "Engineer", "Intern", "Manager"]
-        },
-        {
-            type: "input",
-            name: "name",
-            message: "Enter name:",
-
-        },
-        {
-            type: "number",
-            name: "id",
-            message: "Enter ID number:",
-   
-        },
-        {
-            type: "input",
-            name: "email",
-            message: "Enter email address:",
-
-        },
-        {
-            type: "input",
-            name: "github",
-            message: "Enter GitHub URL?",
-            // use when method, if function returns true, prompt Engineer specific question 
-            when: answers => answers.role === "Engineer"
-        },
-        {
-            type: "input",
-            name: "school",
-            message: "Enter current school:",
-            // use when method, if function returns true, prompt Inter specific question
-            when: answers => answers.role === "Intern"
-        },
-        {
-            type: "number",
-            name: "officeNumber",
-            message: "Enter office number:",
-            // use when method, if function returns true, prompt Manager specific question
-            when: answers => answers.role === "Manager"
-        }
-    ])
+await inquirer
+    .prompt(questionPrompts)
     .then(answers => {
-        // render(answers);
         // create new instance of engineer giving values of engineer responses, then push to employees array
         const newEngineerInstance = new Engineer(answers.name, answers.email, answers.id, answers.role, answers.github);
         // console.log(newEngineerInstance);
@@ -78,17 +87,26 @@ inquirer
         const newInternInstance = new Intern(answers.name, answers.email, answers.id, answers.role, answers.github);
         // console.log(newInternInstance);
         newEmployeeInstance.push(newInternInstance);
+        
+        if(answers.repeatPrompt) {
+            buildTeam()
+        } else {
+            console.log("Your team has been created.")
+        }
     })
     .catch((error) => {
         console.log(error)
     });
+    
+};
 
     // need to create a different array to push the information collected to, then pass that to render function
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
-render(newEmployeeInstance);
+
+// render(newEmployeeInstance);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
