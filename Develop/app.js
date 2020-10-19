@@ -88,19 +88,19 @@ async function buildTeam() {
 
         // create new instance of engineer giving values of engineer responses, then push to employees array
         if(answers.role === "Engineer") {
-        const newEngineerInstance = new Engineer(answers.name, answers.id, answers.email, answers.role, answers.github);
+        const newEngineerInstance = new Engineer(answers.name, answers.id, answers.email, answers.github);
         // console.log(newEngineerInstance);
         employees.push(newEngineerInstance)
         } 
         else if(answers.role === "Manager") {
         // create new instance of manager giving values of engineer respones, then push to employees array
-        const newManagerInstance = new Manager(answers.name, answers.id, answers.email,  answers.role, answers.officeNumber);
+        const newManagerInstance = new Manager(answers.name, answers.id, answers.email,  answers.officeNumber);
         // console.log(newManagerInstance);
         employees.push(newManagerInstance);
         } 
         else if(answers.role === "Intern") {
         // create new instance of intern giving values of engineer responses, then push to employees array
-        const newInternInstance = new Intern(answers.name, answers.id, answers.email, answers.role, answers.school);
+        const newInternInstance = new Intern(answers.name, answers.id, answers.email, answers.school);
         // console.log(newInternInstance);
         employees.push(newInternInstance);
         }
