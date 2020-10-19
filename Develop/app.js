@@ -18,6 +18,7 @@ const employees = [];
 
 // create prompts for questions to be asked
 const questionPrompts = [
+
 // choose an employee type, name, email, and id
 {
     type: "list",
@@ -31,14 +32,14 @@ const questionPrompts = [
     message: "Enter name:",
 },
 {
-    type: "input",
-    name: "email",
-    message: "Enter email address:",
-},
-{
     type: "number",
     name: "id",
     message: "Enter ID number:",
+},
+{
+    type: "input",
+    name: "email",
+    message: "Enter email address:",
 },
 // engineer specific question utilizing when method
 {
@@ -87,19 +88,19 @@ async function buildTeam() {
 
         // create new instance of engineer giving values of engineer responses, then push to employees array
         if(answers.role === "Engineer") {
-        const newEngineerInstance = new Engineer(answers.name, answers.email, answers.id, answers.role, answers.github);
+        const newEngineerInstance = new Engineer(answers.name, answers.id, answers.email, answers.role, answers.github);
         // console.log(newEngineerInstance);
         employees.push(newEngineerInstance)
         } 
         else if(answers.role === "Manager") {
         // create new instance of manager giving values of engineer respones, then push to employees array
-        const newManagerInstance = new Manager(answers.name, answers.email, answers.id, answers.role, answers.officeNumber);
+        const newManagerInstance = new Manager(answers.name, answers.id, answers.email,  answers.role, answers.officeNumber);
         // console.log(newManagerInstance);
         employees.push(newManagerInstance);
         } 
         else if(answers.role === "Intern") {
         // create new instance of intern giving values of engineer responses, then push to employees array
-        const newInternInstance = new Intern(answers.name, answers.email, answers.id, answers.role, answers.school);
+        const newInternInstance = new Intern(answers.name, answers.id, answers.email, answers.role, answers.school);
         // console.log(newInternInstance);
         employees.push(newInternInstance);
         }
