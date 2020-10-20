@@ -110,7 +110,7 @@ async function buildTeam() {
         } else {
             // otherwise, console.log and append new employee instances to team.html
             console.log("Your team has been created.");
-            console.log(employees);
+            // console.log(employees);
             newAppendFile("team.html", render(employees))
         }
     })
