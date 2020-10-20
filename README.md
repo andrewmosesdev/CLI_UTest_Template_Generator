@@ -6,6 +6,9 @@
   The Team Generator application utilizes a command line interface to allow you to create team charts quickly and easily with all pertinent team member information included. Created using Node.js, Inquirer, and tested with Jest to ensure functionality. 
   
 
+  ## Demo:
+  ![Demo](assets/walkthrough.gif)
+
   
   ## Table of Contents:
   * [Installation](#installation) 
