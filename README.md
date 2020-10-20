@@ -7,7 +7,10 @@
   
 
   ## Demo:
-  ![Demo](assets/walkthrough.gif)
+  ![Demo](assets/tutorial.gif)
+
+  [Demo Link](https://drive.google.com/file/d/1XHzw7nJxpb5k0ckrD2R9Vtw8kRSZtG4P/view)
+
 
   
   ## Table of Contents:
