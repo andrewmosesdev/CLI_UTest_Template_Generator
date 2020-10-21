@@ -7,7 +7,7 @@
   
 
   ## Demo:
-  ![Demo](assets/tutorial.gif)
+  ![Demo](https://github.com/andrewmosesdrive/CLI_UTest_Template_Generator/blob/main/Develop/assets/tutorial.gif?raw=true)
 
   [Demo Link](https://drive.google.com/file/d/1XHzw7nJxpb5k0ckrD2R9Vtw8kRSZtG4P/view)
 
