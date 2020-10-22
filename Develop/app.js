@@ -45,7 +45,7 @@ const questionPrompts = [
 {
     type: "input",
     name: "github",
-    message: "Enter GitHub URL:",
+    message: "Enter GitHub username:",
     when: answers => {
         return answers.role === "Engineer"
     }    
